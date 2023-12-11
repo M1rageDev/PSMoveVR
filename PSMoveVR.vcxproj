@@ -70,6 +70,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <SourcePath>$(SourcePath)</SourcePath>
+    <IncludePath>E:\Programowanie\Projekty\C++\PSMoveVR\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Programowanie\Projekty\C++\PSMoveVR\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <SourcePath>E:\Programowanie\Projekty\C++\PSMoveVR\include\PS3EYEDriver\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,10 +112,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\Programowanie\Projekty\C++\PSMoveVR\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>E:\Programowanie\Projekty\C++\PSMoveVR\lib\psmoveapi;E:\Programowanie\Projekty\C++\PSMoveVR\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lib/psmoveapi/psmoveapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -118,6 +129,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\Programowanie\Projekty\C++\PSMoveVR\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +139,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ps3eye.cpp" />
+    <ClCompile Include="ps3eye_capi.cpp" />
     <ClCompile Include="PSMoveVR.cpp" />
+    <ClCompile Include="vr_calibration.cpp" />
+    <ClCompile Include="vr_cameras.cpp" />
+    <ClCompile Include="vr_controllers.cpp" />
+    <ClCompile Include="vr_filter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ps3eye.h" />
+    <ClInclude Include="ps3eye_capi.h" />
+    <ClInclude Include="vr_calibration.h" />
+    <ClInclude Include="vr_cameras.h" />
+    <ClInclude Include="vr_controllers.h" />
+    <ClInclude Include="vr_filter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,5 +18,43 @@
     <ClCompile Include="PSMoveVR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ps3eye.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ps3eye_capi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vr_cameras.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vr_controllers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vr_filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vr_calibration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vr_cameras.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ps3eye.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ps3eye_capi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vr_controllers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vr_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vr_calibration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
