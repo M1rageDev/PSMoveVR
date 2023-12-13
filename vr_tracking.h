@@ -6,16 +6,9 @@
 #include "vr_cameras.h"
 
 namespace vr {
-	class VRPositionSolver {
-	public:
-		vr::VRCamera* camera;
-		glm::mat4 proj, inverse;
-		glm::vec4 viewport;
-
-		VRPositionSolver(vr::VRCamera* camera);
-
-		glm::vec4 solve(float x, float y, float r);
-	};
+	const float REAL_BALL_RADIUS = 2.25f;
 
 	std::tuple<bool, glm::vec3> detectCircle(cv::Mat frame, cv::Scalar low, cv::Scalar high);
+
+	glm::vec3 estimatePosition(glm::vec3 circle, float f_px, int imgW, int imgH);
 }

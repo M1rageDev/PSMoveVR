@@ -44,11 +44,10 @@ int main()
 
 		auto [ret, ball] = vr::detectCircle(cameras[0].cvImg, low, high);
 		if (ret) cv::circle(cameras[0].cvImg, cv::Point(ball.x, ball.y), ball.z, cv::Scalar(255, 255, 255), 1);
-
-		auto [ret2, ball2] = vr::detectCircle(cameras[0].cvImg, lowL, highL);
-		if (ret2) cv::circle(cameras[0].cvImg, cv::Point(ball2.x, ball2.y), ball2.z, cv::Scalar(255, 255, 255), 1);
+		glm::vec3 position = vr::estimatePosition(ball, 547.80446786614039f, 640, 480);
 
 		std::cout << 1.f / timestep << "\n";
+		std::cout << glm::to_string(position) << "\n";
 
 		cv::imshow("eggman", cameras[0].cvImg);
 		cv::waitKey(1);
