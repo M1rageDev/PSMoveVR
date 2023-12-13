@@ -8,6 +8,8 @@
 #include "vr_controllers.h"
 #include "vr_filter.h"
 #include "vr_calibration.h"
+#include "vr_tracking.h"
+#include "vr_config.h"
 
 float lastTime = 0.f;
 float timestep = 0.f;
@@ -21,15 +23,16 @@ int main()
 	vr::VRControllerHandler controllers = vr::VRControllerHandler("00:06:f7:c9:a1:fb","00:13:8a:9c:31:42");
 	psmoveapi::PSMoveAPI moveAPI(&controllers);
 
-	vr::VRMadgwick madgwick = vr::VRMadgwick();
-
-	controllers.left.color = { 1.f, 0.f, 0.f };
-	controllers.right.color = { 0.f, 0.f, 1.f };
+	controllers.left.color = { 0.f, 1.f, 1.f };
+	controllers.right.color = { 1.f, 0.f, 1.f };
 	moveAPI.update();
 
-	// calibrate
-	glm::vec3 gyroOffsets = vr::calibrateGyroscope(50000, &controllers.right, &moveAPI);
-	std::cout << glm::to_string(gyroOffsets) << "\n";
+	vr::beginRead("color.yml");
+	cv::Scalar low = vr::readNodeScalar("rightLow");
+	cv::Scalar high = vr::readNodeScalar("rightHigh");
+	cv::Scalar lowL = vr::readNodeScalar("leftLow");
+	cv::Scalar highL = vr::readNodeScalar("leftHigh");
+	vr::endRead();
 
 	while (true) {
 		float curTime = clock();
@@ -39,8 +42,13 @@ int main()
 		cameras[0].read();
 		moveAPI.update();
 
-		madgwick.update(controllers.right.gyro - gyroOffsets, controllers.right.accel, timestep);
-		std::cout << glm::to_string(glm::degrees(glm::eulerAngles(madgwick.q))) << "\n";
+		auto [ret, ball] = vr::detectCircle(cameras[0].cvImg, low, high);
+		if (ret) cv::circle(cameras[0].cvImg, cv::Point(ball.x, ball.y), ball.z, cv::Scalar(255, 255, 255), 1);
+
+		auto [ret2, ball2] = vr::detectCircle(cameras[0].cvImg, lowL, highL);
+		if (ret2) cv::circle(cameras[0].cvImg, cv::Point(ball2.x, ball2.y), ball2.z, cv::Scalar(255, 255, 255), 1);
+
+		std::cout << 1.f / timestep << "\n";
 
 		cv::imshow("eggman", cameras[0].cvImg);
 		cv::waitKey(1);

@@ -113,6 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>E:\Programowanie\Projekty\C++\PSMoveVR\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,16 +145,20 @@
     <ClCompile Include="PSMoveVR.cpp" />
     <ClCompile Include="vr_calibration.cpp" />
     <ClCompile Include="vr_cameras.cpp" />
+    <ClCompile Include="vr_config.cpp" />
     <ClCompile Include="vr_controllers.cpp" />
     <ClCompile Include="vr_filter.cpp" />
+    <ClCompile Include="vr_tracking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ps3eye.h" />
     <ClInclude Include="ps3eye_capi.h" />
     <ClInclude Include="vr_calibration.h" />
     <ClInclude Include="vr_cameras.h" />
+    <ClInclude Include="vr_config.h" />
     <ClInclude Include="vr_controllers.h" />
     <ClInclude Include="vr_filter.h" />
+    <ClInclude Include="vr_tracking.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
