@@ -27,13 +27,6 @@ int main()
 	controllers.right.color = { 1.f, 0.f, 1.f };
 	moveAPI.update();
 
-	vr::beginRead("color.yml");
-	cv::Scalar low = vr::readNodeScalar("rightLow");
-	cv::Scalar high = vr::readNodeScalar("rightHigh");
-	cv::Scalar lowL = vr::readNodeScalar("leftLow");
-	cv::Scalar highL = vr::readNodeScalar("leftHigh");
-	vr::endRead();
-
 	while (true) {
 		float curTime = clock();
 		timestep = (curTime - lastTime) / 1000.f;
@@ -41,16 +34,6 @@ int main()
 
 		cameras[0].read();
 		moveAPI.update();
-
-		auto [ret, ball] = vr::detectCircle(cameras[0].cvImg, low, high);
-		if (ret) cv::circle(cameras[0].cvImg, cv::Point(ball.x, ball.y), ball.z, cv::Scalar(255, 255, 255), 1);
-		glm::vec3 position = vr::estimatePosition(ball, 547.80446786614039f, 640, 480);
-
-		std::cout << 1.f / timestep << "\n";
-		std::cout << glm::to_string(position) << "\n";
-
-		cv::imshow("eggman", cameras[0].cvImg);
-		cv::waitKey(1);
 	}
 
 	vr::stopEveryCam(cameras);
