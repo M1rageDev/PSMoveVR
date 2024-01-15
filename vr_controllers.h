@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
 #include "psmoveapi/psmoveapi.h"
+#include "vr_filter.h"
 
 namespace vr {
 	struct VRButtonStructure {
@@ -19,16 +20,17 @@ namespace vr {
 
 		glm::vec3 accel = { 0.f, 0.f, 0.f };
 		glm::vec3 gyro = { 0.f, 0.f, 0.f };
+		glm::vec3 gyroOffsets = { 0.f, 0.f, 0.f };
+		vr::VRMadgwick orientation = vr::VRMadgwick();
 
 		float timestep = 0.f;
 		float lastTime = 0.f;
 
-		void update(Controller* controller, float mBeta);
+		void update(Controller* controller);
 	};
 
 	struct VRControllerHandler : public psmoveapi::Handler {
 		VRControllerHandler(const char* leftSerialNumber, const char* rightSerialNumber);
-		VRControllerHandler(glm::quat initialRot, const char* leftSerialNumber, const char* rightSerialNumber, float madgwickBeta_);
 
 		virtual void connect(Controller* controller);
 
@@ -39,8 +41,6 @@ namespace vr {
 		glm::vec3 getGyro(bool leftFunction);
 
 		glm::vec3 getAccel(bool leftFunction);
-
-		float madgwickBeta = 0.035f;
 
 		VRController left;
 		const char* leftSerial;

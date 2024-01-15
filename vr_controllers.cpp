@@ -1,12 +1,13 @@
 #include "vr_controllers.h"
 
-void vr::VRController::update(Controller* controller, float mBeta) {
+void vr::VRController::update(Controller* controller) {
 	float curTime = clock();
 	timestep = (curTime - lastTime) / 1000.f;
 	lastTime = curTime;
 
 	accel = glm::vec3(controller->accelerometer.x, controller->accelerometer.y, controller->accelerometer.z);
 	gyro = glm::vec3(controller->gyroscope.x, controller->gyroscope.y, controller->gyroscope.z);
+	orientation.update(gyro - gyroOffsets, accel, timestep);
 
 	controller->color = color;
 	controller->rumble = rumble;
@@ -30,16 +31,6 @@ vr::VRControllerHandler::VRControllerHandler(const char* leftSerialNumber, const
 	rightSerial = rightSerialNumber;
 }
 
-vr::VRControllerHandler::VRControllerHandler(glm::quat initialRot, const char* leftSerialNumber, const char* rightSerialNumber, float madgwickBeta_ = 0.035f) {
-	madgwickBeta = madgwickBeta_;
-
-	left = VRController();
-	leftSerial = leftSerialNumber;
-
-	right = VRController();
-	rightSerial = rightSerialNumber;
-}
-
 void vr::VRControllerHandler::connect(Controller* controller) {
 	const char* handeness;
 	if (strcmp(controller->serial, rightSerial)) {
@@ -55,10 +46,10 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 
 void vr::VRControllerHandler::update(Controller* controller) {
 	if (strcmp(controller->serial, leftSerial)) {
-		left.update(controller, madgwickBeta);
+		left.update(controller);
 	}
 	else {
-		right.update(controller, madgwickBeta);
+		right.update(controller);
 	}
 }
 

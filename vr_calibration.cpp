@@ -18,6 +18,11 @@ glm::vec3 vr::calibrateGyroscope(unsigned int sampleCount, vr::VRController* con
 	return gyroOffsets;
 }
 
+void vr::calibrateControllers(unsigned int sampleCount, vr::VRControllerHandler* controllers, psmoveapi::PSMoveAPI* api) {
+	controllers->right.gyroOffsets = vr::calibrateGyroscope(sampleCount, &controllers->right, api);
+	controllers->left.gyroOffsets = vr::calibrateGyroscope(sampleCount, &controllers->left, api);
+}
+
 std::tuple<bool, glm::mat4, cv::Mat, cv::Mat> vr::calibrateWorldMatrix(std::vector<cv::Point2f> samples, cv::Mat cameraMatrix, cv::Mat cameraDistortion) {
 	/*
 	CALIBRATION_MAT_OBJECT = {
