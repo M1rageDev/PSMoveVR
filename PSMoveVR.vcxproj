@@ -113,7 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>E:\Programowanie\Projekty\C++\PSMoveVR\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +146,7 @@
     <ClCompile Include="vr_calibration.cpp" />
     <ClCompile Include="vr_cameras.cpp" />
     <ClCompile Include="vr_config.cpp" />
+    <ClCompile Include="vr_connection.cpp" />
     <ClCompile Include="vr_controllers.cpp" />
     <ClCompile Include="vr_filter.cpp" />
     <ClCompile Include="vr_tracking.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="vr_calibration.h" />
     <ClInclude Include="vr_cameras.h" />
     <ClInclude Include="vr_config.h" />
+    <ClInclude Include="vr_connection.h" />
     <ClInclude Include="vr_controllers.h" />
     <ClInclude Include="vr_filter.h" />
     <ClInclude Include="vr_tracking.h" />

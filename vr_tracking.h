@@ -10,5 +10,5 @@ namespace vr {
 
 	std::tuple<bool, glm::vec3> detectCircle(cv::Mat frame, cv::Scalar low, cv::Scalar high);
 
-	glm::vec3 estimatePosition(glm::vec3 circle, float f_px, int imgW, int imgH);
+	glm::vec3 estimatePosition(glm::vec3 circle, float f_px, uint16_t imgW, uint16_t imgH);
 }

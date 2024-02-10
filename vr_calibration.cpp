@@ -8,7 +8,7 @@ glm::vec3 vr::calibrateGyroscope(unsigned int sampleCount, vr::VRController* con
 		auto gyro_data = controller->gyro;
 		imuArray.push_back(gyro_data);
 	}
-	int imuArraySize = imuArray.size();
+	unsigned int imuArraySize = imuArray.size();
 
 	glm::vec3 sum{ 0.0, 0.0, 0.0 };
 	for (int i = 0; i < imuArraySize; i++) {
@@ -21,6 +21,49 @@ glm::vec3 vr::calibrateGyroscope(unsigned int sampleCount, vr::VRController* con
 void vr::calibrateControllers(unsigned int sampleCount, vr::VRControllerHandler* controllers, psmoveapi::PSMoveAPI* api) {
 	controllers->right.gyroOffsets = vr::calibrateGyroscope(sampleCount, &controllers->right, api);
 	controllers->left.gyroOffsets = vr::calibrateGyroscope(sampleCount, &controllers->left, api);
+}
+
+std::vector<cv::Point2f> vr::captureSamples(cv::Mat frame) {
+	cv::TermCriteria criteria = cv::TermCriteria(cv::TermCriteria::EPS | cv::TermCriteria::MAX_ITER, 30, 0.001);
+
+	cv::Mat gray;
+	cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+
+	cv::Mat corners;
+	bool ret = cv::findChessboardCorners(gray, cv::Size(7, 7), corners, cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_FAST_CHECK | cv::CALIB_CB_NORMALIZE_IMAGE);
+	if (ret) {
+		cv::cornerSubPix(gray, corners, cv::Size(11, 11), cv::Size(-1, -1), criteria);
+		return corners;
+	}
+
+	return cv::Mat();
+}
+
+std::tuple<bool, cv::Mat, cv::Mat> vr::calibrateCamera(std::vector<std::vector<cv::Point2f>> imagePoints, cv::Size imgSize) {
+	std::vector<cv::Point3f> objectPoint;
+	std::vector<std::vector<cv::Point3f>> objectPoints;
+
+	// Create object points
+	for (int y = 0; y < 7; y++) {
+		for (int x = 0; x < 7; x++) {
+			objectPoint.push_back(cv::Point3f((float)(x), (float)(y), 0.f));
+		}
+	}
+
+	// Iterate and add object points
+	for (int i = 0; i < imagePoints.size(); i++) {
+		objectPoints.push_back(objectPoint);
+	}
+
+	// Return if no points found
+	if (!(objectPoints.size() > 0)) return { false, cv::Mat(), cv::Mat() };
+	
+	// Calibrate
+	cv::Mat matrix, distortion;
+	std::vector<cv::Mat> rvecs, tvecs;
+	
+	double ret = cv::calibrateCamera(objectPoints, imagePoints, imgSize, matrix, distortion, rvecs, tvecs);
+	return { true, matrix, distortion };
 }
 
 std::tuple<bool, glm::mat4, cv::Mat, cv::Mat> vr::calibrateWorldMatrix(std::vector<cv::Point2f> samples, cv::Mat cameraMatrix, cv::Mat cameraDistortion) {

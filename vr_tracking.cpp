@@ -26,7 +26,7 @@ std::tuple<bool, glm::vec3> vr::detectCircle(cv::Mat frame, cv::Scalar low, cv::
 	return { true, glm::vec3(center.x, center.y, radius) };
 }
 
-glm::vec3 vr::estimatePosition(glm::vec3 ball, float f_px, int imgW, int imgH) {
+glm::vec3 vr::estimatePosition(glm::vec3 ball, float f_px, uint16_t imgW, uint16_t imgH) {
 	float X_px = ball.x;
 	float Y_px = ball.y;
 	float A_px = ball.z;
