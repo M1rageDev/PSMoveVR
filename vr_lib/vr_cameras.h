@@ -1,5 +1,5 @@
 #pragma once
-#include "ps3eye/ps3eye.h"
+#include "ps3eye.h"
 #include "opencv2/opencv.hpp"
 #include "vr_config.h"
 

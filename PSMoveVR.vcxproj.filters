@@ -25,6 +25,12 @@
     <Filter Include="Source Files\vr_lib">
       <UniqueIdentifier>{9ab23396-2996-4e32-946b-934fa7afbca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\psmovevr">
+      <UniqueIdentifier>{837423a9-9343-4e0b-a3ba-97a22ede82db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\psmovevr">
+      <UniqueIdentifier>{fbf5d97f-76d5-4614-9544-1da3c0f0b2a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSMoveVR.cpp">
@@ -57,6 +63,12 @@
     <ClCompile Include="vr_lib\vr_tracking.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
+    <ClCompile Include="psmovevr\errors.cpp">
+      <Filter>Source Files\psmovevr</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure.cpp">
+      <Filter>Source Files\psmovevr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ps3eye\ps3eye_capi.h">
@@ -85,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="vr_lib\vr_tracking.h">
       <Filter>Header Files\vr_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="psmovevr\errors.h">
+      <Filter>Header Files\psmovevr</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure.h">
+      <Filter>Header Files\psmovevr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

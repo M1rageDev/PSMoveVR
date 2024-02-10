@@ -72,11 +72,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <SourcePath>$(SourcePath)</SourcePath>
-    <IncludePath>E:\Programowanie\Projekty\C++\PSMoveVR\include\;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Programowanie\Projekty\C++\PSMoveVR\ps3eye;E:\Programowanie\Projekty\C++\PSMoveVR\include\;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Programowanie\Projekty\C++\PSMoveVR\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <SourcePath>E:\Programowanie\Projekty\C++\PSMoveVR\include\PS3EYEDriver\src;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <LibraryPath>E:\Programowanie\Projekty\C++\PSMoveVR\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Programowanie\Projekty\C++\PSMoveVR\ps3eye;E:\Programowanie\Projekty\C++\PSMoveVR\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,6 +133,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>E:\Programowanie\Projekty\C++\PSMoveVR\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,9 +143,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="data_structure.cpp" />
     <ClCompile Include="ps3eye\ps3eye.cpp" />
     <ClCompile Include="ps3eye\ps3eye_capi.cpp" />
     <ClCompile Include="PSMoveVR.cpp" />
+    <ClCompile Include="psmovevr\errors.cpp" />
     <ClCompile Include="vr_lib\vr_calibration.cpp" />
     <ClCompile Include="vr_lib\vr_cameras.cpp" />
     <ClCompile Include="vr_lib\vr_config.cpp" />
@@ -152,8 +157,10 @@
     <ClCompile Include="vr_lib\vr_tracking.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="data_structure.h" />
     <ClInclude Include="ps3eye\ps3eye.h" />
     <ClInclude Include="ps3eye\ps3eye_capi.h" />
+    <ClInclude Include="psmovevr\errors.h" />
     <ClInclude Include="vr_lib\vr_calibration.h" />
     <ClInclude Include="vr_lib\vr_cameras.h" />
     <ClInclude Include="vr_lib\vr_config.h" />
