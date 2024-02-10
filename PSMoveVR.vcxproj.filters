@@ -13,66 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ps3eye">
+      <UniqueIdentifier>{c1511b49-a2c6-41dc-af57-dbae471e1aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ps3eye">
+      <UniqueIdentifier>{a8dc1c90-10d3-4a7b-b36b-924164cdb03a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\vr_lib">
+      <UniqueIdentifier>{2d0631ca-58d7-4746-9cb6-4c1ba12e1510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vr_lib">
+      <UniqueIdentifier>{9ab23396-2996-4e32-946b-934fa7afbca5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSMoveVR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ps3eye.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ps3eye\ps3eye.cpp">
+      <Filter>Source Files\ps3eye</Filter>
     </ClCompile>
-    <ClCompile Include="ps3eye_capi.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ps3eye\ps3eye_capi.cpp">
+      <Filter>Source Files\ps3eye</Filter>
     </ClCompile>
-    <ClCompile Include="vr_cameras.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_calibration.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_controllers.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_cameras.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_filter.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_config.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_calibration.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_connection.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_tracking.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_controllers.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_config.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_filter.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_connection.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="vr_lib\vr_tracking.cpp">
+      <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vr_cameras.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ps3eye\ps3eye_capi.h">
+      <Filter>Header Files\ps3eye</Filter>
     </ClInclude>
-    <ClInclude Include="ps3eye.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ps3eye\ps3eye.h">
+      <Filter>Header Files\ps3eye</Filter>
     </ClInclude>
-    <ClInclude Include="ps3eye_capi.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_calibration.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_controllers.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_cameras.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_filter.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_config.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_calibration.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_connection.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_tracking.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_controllers.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_config.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_filter.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_connection.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vr_lib\vr_tracking.h">
+      <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

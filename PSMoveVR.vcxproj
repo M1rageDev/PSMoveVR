@@ -140,27 +140,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ps3eye.cpp" />
-    <ClCompile Include="ps3eye_capi.cpp" />
+    <ClCompile Include="ps3eye\ps3eye.cpp" />
+    <ClCompile Include="ps3eye\ps3eye_capi.cpp" />
     <ClCompile Include="PSMoveVR.cpp" />
-    <ClCompile Include="vr_calibration.cpp" />
-    <ClCompile Include="vr_cameras.cpp" />
-    <ClCompile Include="vr_config.cpp" />
-    <ClCompile Include="vr_connection.cpp" />
-    <ClCompile Include="vr_controllers.cpp" />
-    <ClCompile Include="vr_filter.cpp" />
-    <ClCompile Include="vr_tracking.cpp" />
+    <ClCompile Include="vr_lib\vr_calibration.cpp" />
+    <ClCompile Include="vr_lib\vr_cameras.cpp" />
+    <ClCompile Include="vr_lib\vr_config.cpp" />
+    <ClCompile Include="vr_lib\vr_connection.cpp" />
+    <ClCompile Include="vr_lib\vr_controllers.cpp" />
+    <ClCompile Include="vr_lib\vr_filter.cpp" />
+    <ClCompile Include="vr_lib\vr_tracking.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ps3eye.h" />
-    <ClInclude Include="ps3eye_capi.h" />
-    <ClInclude Include="vr_calibration.h" />
-    <ClInclude Include="vr_cameras.h" />
-    <ClInclude Include="vr_config.h" />
-    <ClInclude Include="vr_connection.h" />
-    <ClInclude Include="vr_controllers.h" />
-    <ClInclude Include="vr_filter.h" />
-    <ClInclude Include="vr_tracking.h" />
+    <ClInclude Include="ps3eye\ps3eye.h" />
+    <ClInclude Include="ps3eye\ps3eye_capi.h" />
+    <ClInclude Include="vr_lib\vr_calibration.h" />
+    <ClInclude Include="vr_lib\vr_cameras.h" />
+    <ClInclude Include="vr_lib\vr_config.h" />
+    <ClInclude Include="vr_lib\vr_connection.h" />
+    <ClInclude Include="vr_lib\vr_controllers.h" />
+    <ClInclude Include="vr_lib\vr_filter.h" />
+    <ClInclude Include="vr_lib\vr_tracking.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

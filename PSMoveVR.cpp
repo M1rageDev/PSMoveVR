@@ -2,13 +2,13 @@
 #include "opencv2/opencv.hpp"
 #include <opencv2/core/utils/logger.hpp>
 
-#include "vr_cameras.h"
-#include "vr_controllers.h"
-#include "vr_filter.h"
-#include "vr_calibration.h"
-#include "vr_tracking.h"
-#include "vr_config.h" 
-#include "vr_connection.h"
+#include "vr_lib/vr_cameras.h"
+#include "vr_lib/vr_controllers.h"
+#include "vr_lib/vr_filter.h"
+#include "vr_lib/vr_calibration.h"
+#include "vr_lib/vr_tracking.h"
+#include "vr_lib/vr_config.h" 
+#include "vr_lib/vr_connection.h"
 
 float lastTime = 0.f;
 float timestep = 0.f;
