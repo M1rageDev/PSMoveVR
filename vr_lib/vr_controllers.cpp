@@ -1,5 +1,9 @@
 #include "vr_controllers.h"
 
+void vr::VRController::connect(Controller* controller) {
+
+}
+
 void vr::VRController::update(Controller* controller) {
 	float curTime = clock();
 	timestep = (curTime - lastTime) / 1000.f;
@@ -23,63 +27,45 @@ void vr::VRController::update(Controller* controller) {
 	buttons.trigger = controller->trigger;
 }
 
-vr::VRControllerHandler::VRControllerHandler(const char* leftSerialNumber, const char* rightSerialNumber) {
-	left = VRController();
-	leftSerial = leftSerialNumber;
-
-	right = VRController();
-	rightSerial = rightSerialNumber;
-}
-
 void vr::VRControllerHandler::connect(Controller* controller) {
-	const char* handeness;
-	if (strcmp(controller->serial, rightSerial)) {
-		rightConnected = true;
-		handeness = "Right";
-	}
-	else {
-		leftConnected = true;
-		handeness = "Left";
-	}
-	printf("%s controller connected: %s\n", handeness, controller->serial);
+	// Create controller
+	VRController vrc = VRController();
+	vrc.serial = controller->serial;
+	vrc.connect(controller);
+
+	// Add controller to list
+	controllers.push_back(vrc);
+
+	// Info
+	printf("Controller connected: %s\n", controller->serial);
 }
 
 void vr::VRControllerHandler::update(Controller* controller) {
-	if (strcmp(controller->serial, leftSerial)) {
-		left.update(controller);
-	}
-	else {
-		right.update(controller);
+	for (VRController vrc : controllers) {
+		if (strcmp(controller->serial, vrc.serial.c_str())) {
+			vrc.update(controller);
+			break;
+		}
 	}
 }
 
 void vr::VRControllerHandler::disconnect(Controller* controller) {
-	const char* handeness;
-	if (strcmp(controller->serial, rightSerial)) {
-		rightConnected = false;
-		handeness = "Right";
+	// Remove from list
+	for (int i = 0; i < controllers.size(); i++) {
+		if (strcmp(controller->serial, controllers[i].serial.c_str())) {
+			controllers.erase(controllers.begin() + i);
+			break;
+		}
 	}
-	else {
-		leftConnected = false;
-		handeness = "Left";
-	}
-	printf("%s controller disconnected: %s\n", handeness, controller->serial);
+
+	// Info
+	printf("Controller disconnected: %s\n", controller->serial);
 }
 
-glm::vec3 vr::VRControllerHandler::getGyro(bool leftFunction) {
-	if (leftFunction) {
-		return left.gyro;
-	}
-	else {
-		return right.gyro;
-	}
+glm::vec3 vr::VRControllerHandler::getGyro(uint8_t index) {
+	return controllers[index].gyro;
 }
 
-glm::vec3 vr::VRControllerHandler::getAccel(bool leftFunction) {
-	if (leftFunction) {
-		return left.accel;
-	}
-	else {
-		return right.accel;
-	}
+glm::vec3 vr::VRControllerHandler::getAccel(uint8_t index) {
+	return controllers[index].gyro;
 }

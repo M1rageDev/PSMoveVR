@@ -88,6 +88,11 @@ void vr::VRCamera::stop() {
 	saveCalibration();
 }
 
+uint8_t vr::getCameraCount() {
+	std::vector<PS3EYECam::PS3EYERef> devices = PS3EYECam::getDevices();
+	return devices.size();
+}
+
 bool vr::checkCamerasConnected() {
 	std::vector<PS3EYECam::PS3EYERef> devices = PS3EYECam::getDevices();
 	return devices.size() != 0;

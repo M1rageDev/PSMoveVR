@@ -1,9 +1,11 @@
 #pragma once
-#include <stdio.h>
 #include <iostream>
+#include <vector>
+
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
 #include "psmoveapi/psmoveapi.h"
+
 #include "vr_filter.h"
 
 namespace vr {
@@ -13,6 +15,8 @@ namespace vr {
 	};
 
 	struct VRController {
+		std::string serial;
+
 		RGB color = { 0.f, 0.f, 0.f };
 		float rumble = 0.f;
 
@@ -26,11 +30,12 @@ namespace vr {
 		float timestep = 0.f;
 		float lastTime = 0.f;
 
+		void connect(Controller* controller);
 		void update(Controller* controller);
 	};
 
 	struct VRControllerHandler : public psmoveapi::Handler {
-		VRControllerHandler(const char* leftSerialNumber, const char* rightSerialNumber);
+		VRControllerHandler();
 
 		virtual void connect(Controller* controller);
 
@@ -38,15 +43,10 @@ namespace vr {
 
 		virtual void disconnect(Controller* controller);
 
-		glm::vec3 getGyro(bool leftFunction);
+		glm::vec3 getGyro(uint8_t index);
 
-		glm::vec3 getAccel(bool leftFunction);
+		glm::vec3 getAccel(uint8_t index);
 
-		VRController left;
-		const char* leftSerial;
-		bool leftConnected;
-		VRController right;
-		const char* rightSerial;
-		bool rightConnected;
+		std::vector<VRController> controllers;
 	};
 }

@@ -30,6 +30,7 @@ namespace vr {
 		bool tryReadCalibration();
 	};
 
+	uint8_t getCameraCount();
 	bool checkCamerasConnected();
 	VRCamera* initializeEveryCam(uint16_t fps, uint32_t width, uint32_t height, uint8_t exposure, uint8_t gain, bool flip);
 	void stopEveryCam(vr::VRCamera* devices);
