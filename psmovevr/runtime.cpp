@@ -8,8 +8,12 @@ cv::Mat psmovevr::getPicture(uint8_t index) {
 	return psmovevr::cameras[index].eye.cvImg;
 }
 
+void psmovevr::yieldUntilConnected(uint8_t desiredCount) {
+	while (psmovevr::controllers.size() < desiredCount) continue;
+}
+
 void psmovevr::tickControllers() {
-	psmovevr::moveApi->update();
+	psmovevr::moveApi.update();
 }
 
 void psmovevr::setControllerColor(uint8_t index, RGB color) {
@@ -17,5 +21,5 @@ void psmovevr::setControllerColor(uint8_t index, RGB color) {
 }
 
 void psmovevr::calibrateImu(unsigned int samples) {
-	vr::calibrateControllers(samples, &psmovevr::controllerHandler, psmovevr::moveApi);
+	vr::calibrateControllers(samples, &psmovevr::controllerHandler, &psmovevr::moveApi);
 }

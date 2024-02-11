@@ -10,6 +10,7 @@ namespace psmovevr
 	cv::Mat getPicture(uint8_t index);
 
 	// Controllers
+	void yieldUntilConnected(uint8_t desiredCount);
 	void tickControllers();
 	void setControllerColor(uint8_t index, RGB color);
 

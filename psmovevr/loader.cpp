@@ -1,6 +1,12 @@
 #include "loader.h"
 
 void psmovevr::loadCameras() {
+	// Enable CV logging
+	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_ERROR);
+
+	// Handle errors
+	if (!vr::checkCamerasConnected()) psmovevr::throwNoCameras();
+
 	vr::VRCamera* cameras = vr::initializeEveryCam(60, 640, 480, 20, 0, true);
 
 	for (int i = 0; i < vr::getCameraCount(); i++) {
@@ -18,8 +24,7 @@ void psmovevr::loadCameras() {
 }
 
 void psmovevr::loadControllers() {
-	psmovevr::controllerHandler = vr::VRControllerHandler();
-	psmovevr::moveApi = new psmoveapi::PSMoveAPI(&psmovevr::controllerHandler);
+	psmovevr::moveApi.update();
 }
 
 void psmovevr::stopCameras() {

@@ -13,23 +13,17 @@
 #include "vr_connection.h"
 
 // Program modules
-#include "psmovevr/errors.h"
 #include "psmovevr/data_structure.h"
 #include "psmovevr/loader.h"
 #include "psmovevr/runtime.h"
-
-float lastTime = 0.f;
-float timestep = 0.f;
+#include "psmovevr/clock.h"
 
 const std::string DATA_BUFFER = "{}{}{}{}{}{}{}";
 
 int main()
 {
-	// Enable CV logging
-	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_ERROR);
-
-	// Handle errors
-	if (!vr::checkCamerasConnected()) psmovevr::throwNoCameras();
+	// Create clock
+	psmovevr::Clock clock = psmovevr::Clock();
 
 	// Create UDP connection
 	vr::VRConnection connection = vr::VRConnection(49000);
@@ -48,28 +42,26 @@ int main()
 
 	// Main loop
 	for (;;) {
-		// Check timestep
-		float curTime = clock();
-		timestep = (curTime - lastTime) / 1000.f;
-		lastTime = curTime;
+		clock.tick();
 
 		// Tick cameras and controllers
 		psmovevr::readCameras();
 		psmovevr::tickControllers();
 
 		// Debug info
-		cv::putText(psmovevr::getPicture(0), std::to_string(1.f / timestep), cv::Point(0.f, 16.f), cv::FONT_HERSHEY_PLAIN, 1, cv::Scalar(255.f, 255.f, 255.f));
+		cv::putText(psmovevr::getPicture(0), std::to_string(1.f / clock.timestep), cv::Point(0.f, 16.f), cv::FONT_HERSHEY_PLAIN, 1, cv::Scalar(255.f, 255.f, 255.f));
 
 		// Send UDP signal to SteamVR
 		//std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args());
 		//const char* charBuffer = stringBuffer.c_str();
-		//connection.send("Mm bobbies");
+		connection.send("Mm bobbies");
 
 		cv::imshow("Camera", psmovevr::getPicture(0));
 		int key = cv::waitKey(1);
 		if (key == 27) break;
 	}
 
+	// Stop the service
 	connection.stop();
 	cv::destroyAllWindows();
 	psmovevr::stopCameras();

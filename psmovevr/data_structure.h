@@ -35,14 +35,15 @@ namespace psmovevr
 	};
 
 	// Paths
-	std::string masterPath;
-	std::string controllersFolder;
-	std::string camerasFolder;
+	inline std::string masterPath;
+	inline std::string controllersFolder;
+	inline std::string camerasFolder;
 	
 	// Global
-	vr::VRControllerHandler controllerHandler;
-	psmoveapi::PSMoveAPI* moveApi;
-	std::vector<controller_structure> controllers;
-	std::vector<camera_structure> cameras;
+	inline vr::VRControllerHandler controllerHandler = vr::VRControllerHandler();
+	inline psmoveapi::PSMoveAPI moveApi(&psmovevr::controllerHandler);
+
+	inline std::vector<controller_structure> controllers;
+	inline std::vector<camera_structure> cameras;
 }
 #endif

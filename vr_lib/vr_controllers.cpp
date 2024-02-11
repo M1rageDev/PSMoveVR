@@ -27,7 +27,14 @@ void vr::VRController::update(Controller* controller) {
 	buttons.trigger = controller->trigger;
 }
 
+vr::VRControllerHandler::VRControllerHandler() {
+
+}
+
 void vr::VRControllerHandler::connect(Controller* controller) {
+	// Info
+	printf("Controller connected: %s\n", controller->serial);
+
 	// Create controller
 	VRController vrc = VRController();
 	vrc.serial = controller->serial;
@@ -35,9 +42,6 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 
 	// Add controller to list
 	controllers.push_back(vrc);
-
-	// Info
-	printf("Controller connected: %s\n", controller->serial);
 }
 
 void vr::VRControllerHandler::update(Controller* controller) {

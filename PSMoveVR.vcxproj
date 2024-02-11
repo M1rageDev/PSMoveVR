@@ -146,7 +146,7 @@
     <ClCompile Include="ps3eye\ps3eye.cpp" />
     <ClCompile Include="ps3eye\ps3eye_capi.cpp" />
     <ClCompile Include="PSMoveVR.cpp" />
-    <ClCompile Include="psmovevr\data_structure.cpp" />
+    <ClCompile Include="psmovevr\clock.cpp" />
     <ClCompile Include="psmovevr\errors.cpp" />
     <ClCompile Include="psmovevr\loader.cpp" />
     <ClCompile Include="psmovevr\runtime.cpp" />
@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="ps3eye\ps3eye.h" />
     <ClInclude Include="ps3eye\ps3eye_capi.h" />
+    <ClInclude Include="psmovevr\clock.h" />
     <ClInclude Include="psmovevr\data_structure.h" />
     <ClInclude Include="psmovevr\errors.h" />
     <ClInclude Include="psmovevr\loader.h" />

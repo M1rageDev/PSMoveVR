@@ -66,13 +66,13 @@
     <ClCompile Include="psmovevr\errors.cpp">
       <Filter>Source Files\psmovevr</Filter>
     </ClCompile>
-    <ClCompile Include="psmovevr\data_structure.cpp">
-      <Filter>Source Files\psmovevr</Filter>
-    </ClCompile>
     <ClCompile Include="psmovevr\loader.cpp">
       <Filter>Source Files\psmovevr</Filter>
     </ClCompile>
     <ClCompile Include="psmovevr\runtime.cpp">
+      <Filter>Source Files\psmovevr</Filter>
+    </ClCompile>
+    <ClCompile Include="psmovevr\clock.cpp">
       <Filter>Source Files\psmovevr</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,6 +114,9 @@
       <Filter>Header Files\psmovevr</Filter>
     </ClInclude>
     <ClInclude Include="psmovevr\runtime.h">
+      <Filter>Header Files\psmovevr</Filter>
+    </ClInclude>
+    <ClInclude Include="psmovevr\clock.h">
       <Filter>Header Files\psmovevr</Filter>
     </ClInclude>
   </ItemGroup>
