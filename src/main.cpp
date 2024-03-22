@@ -1,7 +1,5 @@
 // Standard
 #include <iostream>
-#include "opencv2/opencv.hpp"
-#include <opencv2/core/utils/logger.hpp>
 
 // VR lib
 #include "vr_cameras.h"
@@ -13,10 +11,7 @@
 #include "vr_connection.h"
 
 // Program modules
-#include "psmovevr/data_structure.h"
-#include "psmovevr/loader.h"
-#include "psmovevr/runtime.h"
-#include "psmovevr/clock.h"
+#include "clock.h"
 
 const std::string DATA_BUFFER = "{}{}{}{}{}{}{}";
 
@@ -42,6 +37,7 @@ int main()
 
 	// Main loop
 	for (;;) {
+		// Tick
 		clock.tick();
 
 		// Tick cameras and controllers

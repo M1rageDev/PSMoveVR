@@ -5,9 +5,9 @@
 
 using namespace ps3eye;
 
-#define VR_CAM_CALIBRATION_PATH "Cameras"
-
 namespace vr {
+	inline const char* camerasPath = "Cameras";
+
 	class VRCamera {
 	public:
 		PS3EYECam::PS3EYERef eye;

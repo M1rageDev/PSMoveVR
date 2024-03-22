@@ -36,7 +36,7 @@ vr::VRCamera::VRCamera(uint8_t index, PS3EYECam::PS3EYERef ref, uint16_t fps, ui
 
 bool vr::VRCamera::tryReadCalibration() {
 	// Create path
-	std::string path = VR_CAM_CALIBRATION_PATH;
+	std::string path = camerasPath;
 	path += "/";
 	path += "camera";
 	path += std::to_string(index);
@@ -60,7 +60,7 @@ bool vr::VRCamera::tryReadCalibration() {
 
 void vr::VRCamera::saveCalibration() {
 	// Create path
-	std::string path = VR_CAM_CALIBRATION_PATH;
+	std::string path = camerasPath;
 	path += "/";
 	path += "camera";
 	path += std::to_string(index);

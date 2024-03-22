@@ -71,9 +71,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <SourcePath>E:\Programowanie\Projekty\C++\PSMoveVR\vr_lib;$(SourcePath)</SourcePath>
-    <IncludePath>E:\Programowanie\Projekty\C++\PSMoveVR\vr_lib;E:\Programowanie\Projekty\C++\PSMoveVR\ps3eye;E:\Programowanie\Projekty\C++\PSMoveVR\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Programowanie\Projekty\C++\PSMoveVR\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>E:\Programowanie\Projekty\CPP\PSMoveVR\src;E:\Programowanie\Projekty\CPP\PSMoveVR\src\vr_lib;$(SourcePath)</SourcePath>
+    <IncludePath>E:\Programowanie\Projekty\CPP\PSMoveVR\src\vr_lib;E:\Programowanie\Projekty\CPP\PSMoveVR\ps3eye;E:\Programowanie\Projekty\CPP\PSMoveVR\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Programowanie\Projekty\CPP\PSMoveVR\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <SourcePath>E:\Programowanie\Projekty\C++\PSMoveVR\vr_lib;$(SourcePath)</SourcePath>
@@ -145,34 +145,27 @@
   <ItemGroup>
     <ClCompile Include="ps3eye\ps3eye.cpp" />
     <ClCompile Include="ps3eye\ps3eye_capi.cpp" />
-    <ClCompile Include="PSMoveVR.cpp" />
-    <ClCompile Include="psmovevr\clock.cpp" />
-    <ClCompile Include="psmovevr\errors.cpp" />
-    <ClCompile Include="psmovevr\loader.cpp" />
-    <ClCompile Include="psmovevr\runtime.cpp" />
-    <ClCompile Include="vr_lib\vr_calibration.cpp" />
-    <ClCompile Include="vr_lib\vr_cameras.cpp" />
-    <ClCompile Include="vr_lib\vr_config.cpp" />
-    <ClCompile Include="vr_lib\vr_connection.cpp" />
-    <ClCompile Include="vr_lib\vr_controllers.cpp" />
-    <ClCompile Include="vr_lib\vr_filter.cpp" />
-    <ClCompile Include="vr_lib\vr_tracking.cpp" />
+    <ClCompile Include="src\clock.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\vr_lib\vr_calibration.cpp" />
+    <ClCompile Include="src\vr_lib\vr_cameras.cpp" />
+    <ClCompile Include="src\vr_lib\vr_config.cpp" />
+    <ClCompile Include="src\vr_lib\vr_connection.cpp" />
+    <ClCompile Include="src\vr_lib\vr_controllers.cpp" />
+    <ClCompile Include="src\vr_lib\vr_filter.cpp" />
+    <ClCompile Include="src\vr_lib\vr_tracking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ps3eye\ps3eye.h" />
     <ClInclude Include="ps3eye\ps3eye_capi.h" />
-    <ClInclude Include="psmovevr\clock.h" />
-    <ClInclude Include="psmovevr\data_structure.h" />
-    <ClInclude Include="psmovevr\errors.h" />
-    <ClInclude Include="psmovevr\loader.h" />
-    <ClInclude Include="psmovevr\runtime.h" />
-    <ClInclude Include="vr_lib\vr_calibration.h" />
-    <ClInclude Include="vr_lib\vr_cameras.h" />
-    <ClInclude Include="vr_lib\vr_config.h" />
-    <ClInclude Include="vr_lib\vr_connection.h" />
-    <ClInclude Include="vr_lib\vr_controllers.h" />
-    <ClInclude Include="vr_lib\vr_filter.h" />
-    <ClInclude Include="vr_lib\vr_tracking.h" />
+    <ClInclude Include="src\clock.h" />
+    <ClInclude Include="src\vr_lib\vr_calibration.h" />
+    <ClInclude Include="src\vr_lib\vr_cameras.h" />
+    <ClInclude Include="src\vr_lib\vr_config.h" />
+    <ClInclude Include="src\vr_lib\vr_connection.h" />
+    <ClInclude Include="src\vr_lib\vr_controllers.h" />
+    <ClInclude Include="src\vr_lib\vr_filter.h" />
+    <ClInclude Include="src\vr_lib\vr_tracking.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

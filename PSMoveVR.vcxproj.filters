@@ -25,55 +25,40 @@
     <Filter Include="Source Files\vr_lib">
       <UniqueIdentifier>{9ab23396-2996-4e32-946b-934fa7afbca5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\psmovevr">
-      <UniqueIdentifier>{837423a9-9343-4e0b-a3ba-97a22ede82db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\psmovevr">
-      <UniqueIdentifier>{fbf5d97f-76d5-4614-9544-1da3c0f0b2a8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PSMoveVR.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ps3eye\ps3eye.cpp">
       <Filter>Source Files\ps3eye</Filter>
     </ClCompile>
     <ClCompile Include="ps3eye\ps3eye_capi.cpp">
       <Filter>Source Files\ps3eye</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_calibration.cpp">
+    <ClCompile Include="src\clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vr_lib\vr_calibration.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_cameras.cpp">
+    <ClCompile Include="src\vr_lib\vr_cameras.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_config.cpp">
+    <ClCompile Include="src\vr_lib\vr_config.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_connection.cpp">
+    <ClCompile Include="src\vr_lib\vr_connection.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_controllers.cpp">
+    <ClCompile Include="src\vr_lib\vr_controllers.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_filter.cpp">
+    <ClCompile Include="src\vr_lib\vr_filter.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="vr_lib\vr_tracking.cpp">
+    <ClCompile Include="src\vr_lib\vr_tracking.cpp">
       <Filter>Source Files\vr_lib</Filter>
-    </ClCompile>
-    <ClCompile Include="psmovevr\errors.cpp">
-      <Filter>Source Files\psmovevr</Filter>
-    </ClCompile>
-    <ClCompile Include="psmovevr\loader.cpp">
-      <Filter>Source Files\psmovevr</Filter>
-    </ClCompile>
-    <ClCompile Include="psmovevr\runtime.cpp">
-      <Filter>Source Files\psmovevr</Filter>
-    </ClCompile>
-    <ClCompile Include="psmovevr\clock.cpp">
-      <Filter>Source Files\psmovevr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,41 +68,29 @@
     <ClInclude Include="ps3eye\ps3eye.h">
       <Filter>Header Files\ps3eye</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_calibration.h">
+    <ClInclude Include="src\clock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vr_lib\vr_calibration.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_cameras.h">
+    <ClInclude Include="src\vr_lib\vr_cameras.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_config.h">
+    <ClInclude Include="src\vr_lib\vr_config.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_connection.h">
+    <ClInclude Include="src\vr_lib\vr_connection.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_controllers.h">
+    <ClInclude Include="src\vr_lib\vr_controllers.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_filter.h">
+    <ClInclude Include="src\vr_lib\vr_filter.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="vr_lib\vr_tracking.h">
+    <ClInclude Include="src\vr_lib\vr_tracking.h">
       <Filter>Header Files\vr_lib</Filter>
-    </ClInclude>
-    <ClInclude Include="psmovevr\errors.h">
-      <Filter>Header Files\psmovevr</Filter>
-    </ClInclude>
-    <ClInclude Include="psmovevr\data_structure.h">
-      <Filter>Header Files\psmovevr</Filter>
-    </ClInclude>
-    <ClInclude Include="psmovevr\loader.h">
-      <Filter>Header Files\psmovevr</Filter>
-    </ClInclude>
-    <ClInclude Include="psmovevr\runtime.h">
-      <Filter>Header Files\psmovevr</Filter>
-    </ClInclude>
-    <ClInclude Include="psmovevr\clock.h">
-      <Filter>Header Files\psmovevr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
