@@ -35,7 +35,17 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 	// Info
 	printf("Controller connected: %s\n", controller->serial);
 
-	// Create controller
+	// See if the controller is already allocated
+	for (VRController vrc : controllers) {
+		// Compare the serial number
+		if (strcmp(controller->serial, vrc.serial.c_str())) {
+			printf("Controller already allocated.");
+			vrc.connect(controller);
+			return;
+		}
+	}
+
+	// We haven't found any allocated controller, so do it now
 	VRController vrc = VRController();
 	vrc.serial = controller->serial;
 	vrc.connect(controller);
@@ -45,8 +55,11 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 }
 
 void vr::VRControllerHandler::update(Controller* controller) {
+	// Iterate over every controller
 	for (VRController vrc : controllers) {
+		// Compare the serial number
 		if (strcmp(controller->serial, vrc.serial.c_str())) {
+			// Update the correct controller and break the loop
 			vrc.update(controller);
 			break;
 		}
@@ -64,6 +77,14 @@ void vr::VRControllerHandler::disconnect(Controller* controller) {
 
 	// Info
 	printf("Controller disconnected: %s\n", controller->serial);
+}
+
+void vr::VRControllerHandler::allocateControllerSpace(const char* serial) {
+	// Allocate the space in the controller vector for a controller, allowing data to be passed before the controller is loaded by PSMoveAPI
+	VRController controller = VRController();
+	controller.serial = serial;
+
+	controllers.push_back(controller);
 }
 
 glm::vec3 vr::VRControllerHandler::getGyro(uint8_t index) {

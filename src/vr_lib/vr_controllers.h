@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
@@ -42,6 +43,8 @@ namespace vr {
 		virtual void update(Controller* controller);
 
 		virtual void disconnect(Controller* controller);
+
+		void allocateControllerSpace(const char* serial);
 
 		glm::vec3 getGyro(uint8_t index);
 

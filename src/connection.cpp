@@ -1,6 +1,6 @@
-#include "vr_connection.h"
+#include "connection.h"
 
-vr::VRConnection::VRConnection(unsigned int port) {
+psmovevr::Connection::Connection(unsigned int port) {
 	// this shit is black magic
 	WSADATA wsaData;
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -25,7 +25,7 @@ vr::VRConnection::VRConnection(unsigned int port) {
 	remoteAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 }
 
-void vr::VRConnection::send(const char* buffer) {
+void psmovevr::Connection::send(const char* buffer) {
 	int sent = sendto(sock, buffer, strlen(buffer), 0, (sockaddr*)&remoteAddr, sizeof(remoteAddr));
 	if (sent == SOCKET_ERROR)
 	{
@@ -35,7 +35,7 @@ void vr::VRConnection::send(const char* buffer) {
 	}
 }
 
-void vr::VRConnection::stop() {
+void psmovevr::Connection::stop() {
 	closesocket(sock);
 	WSACleanup();
 }

@@ -146,11 +146,12 @@
     <ClCompile Include="ps3eye\ps3eye.cpp" />
     <ClCompile Include="ps3eye\ps3eye_capi.cpp" />
     <ClCompile Include="src\clock.cpp" />
+    <ClCompile Include="src\connection.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\optical.cpp" />
     <ClCompile Include="src\vr_lib\vr_calibration.cpp" />
     <ClCompile Include="src\vr_lib\vr_cameras.cpp" />
     <ClCompile Include="src\vr_lib\vr_config.cpp" />
-    <ClCompile Include="src\vr_lib\vr_connection.cpp" />
     <ClCompile Include="src\vr_lib\vr_controllers.cpp" />
     <ClCompile Include="src\vr_lib\vr_filter.cpp" />
     <ClCompile Include="src\vr_lib\vr_tracking.cpp" />
@@ -159,10 +160,11 @@
     <ClInclude Include="ps3eye\ps3eye.h" />
     <ClInclude Include="ps3eye\ps3eye_capi.h" />
     <ClInclude Include="src\clock.h" />
+    <ClInclude Include="src\connection.h" />
+    <ClInclude Include="src\optical.h" />
     <ClInclude Include="src\vr_lib\vr_calibration.h" />
     <ClInclude Include="src\vr_lib\vr_cameras.h" />
     <ClInclude Include="src\vr_lib\vr_config.h" />
-    <ClInclude Include="src\vr_lib\vr_connection.h" />
     <ClInclude Include="src\vr_lib\vr_controllers.h" />
     <ClInclude Include="src\vr_lib\vr_filter.h" />
     <ClInclude Include="src\vr_lib\vr_tracking.h" />

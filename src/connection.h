@@ -7,16 +7,16 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
-namespace vr
+namespace psmovevr
 {
 	const std::string DATA_BUFFER = "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|0|0|0|0|0|0|0|0|{}|{}|0|0|0|0|0|0|0|0";
 
-	class VRConnection {
+	class Connection {
 	public:
 		SOCKET sock;
 		sockaddr_in remoteAddr;
 
-		VRConnection(unsigned int port);
+		Connection(unsigned int port);
 
 		void send(const char* buffer);
 

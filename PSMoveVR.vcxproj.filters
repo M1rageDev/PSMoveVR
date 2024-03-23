@@ -48,9 +48,6 @@
     <ClCompile Include="src\vr_lib\vr_config.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\vr_lib\vr_connection.cpp">
-      <Filter>Source Files\vr_lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\vr_lib\vr_controllers.cpp">
       <Filter>Source Files\vr_lib</Filter>
     </ClCompile>
@@ -59,6 +56,12 @@
     </ClCompile>
     <ClCompile Include="src\vr_lib\vr_tracking.cpp">
       <Filter>Source Files\vr_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\optical.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +83,6 @@
     <ClInclude Include="src\vr_lib\vr_config.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
-    <ClInclude Include="src\vr_lib\vr_connection.h">
-      <Filter>Header Files\vr_lib</Filter>
-    </ClInclude>
     <ClInclude Include="src\vr_lib\vr_controllers.h">
       <Filter>Header Files\vr_lib</Filter>
     </ClInclude>
@@ -91,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="src\vr_lib\vr_tracking.h">
       <Filter>Header Files\vr_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\connection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\optical.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
