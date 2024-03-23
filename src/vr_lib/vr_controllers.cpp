@@ -1,7 +1,8 @@
 #include "vr_controllers.h"
 
 void vr::VRController::connect(Controller* controller) {
-
+	connected = true;
+	std::cout << connected << std::endl;
 }
 
 void vr::VRController::update(Controller* controller) {
@@ -39,7 +40,6 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 	for (VRController vrc : controllers) {
 		// Compare the serial number
 		if (strcmp(controller->serial, vrc.serial.c_str())) {
-			printf("Controller already allocated.");
 			vrc.connect(controller);
 			return;
 		}
@@ -82,6 +82,7 @@ void vr::VRControllerHandler::disconnect(Controller* controller) {
 void vr::VRControllerHandler::allocateControllerSpace(const char* serial) {
 	// Allocate the space in the controller vector for a controller, allowing data to be passed before the controller is loaded by PSMoveAPI
 	VRController controller = VRController();
+	controller.connected = false;
 	controller.serial = serial;
 
 	controllers.push_back(controller);

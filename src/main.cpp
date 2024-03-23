@@ -14,9 +14,43 @@
 #include "connection.h"
 #include "optical.h"
 
+using namespace psmovevr;
+
+// CONSTANTS
 const std::string DATA_BUFFER = "{}{}{}{}{}{}{}";
 
-using namespace psmovevr;
+// INSTANCES
+Clock ps_clock;
+Connection connection;
+vr::VRCamera* cameras;
+vr::VRControllerHandler controllers = vr::VRControllerHandler();
+psmoveapi::PSMoveAPI moveAPI(&controllers);
+vr::VRController* leftController;
+vr::VRController* rightController;
+
+void init() {
+	ps_clock = Clock();
+	cameras = vr::initializeEveryCam(60, 640, 480, 20, 0, true);
+	connection = Connection();
+	connection.start(49000);
+
+	// Create controller handlers
+	const char* leftSrl = "00:06:f7:c9:a1:fb";
+	const char* rightSrl = "00:13:8a:9c:31:42";
+
+	// Allocate the space for the left/right controller in the controller vector
+	controllers.allocateControllerSpace(leftSrl);
+	controllers.allocateControllerSpace(rightSrl);
+
+	// Set pointers to the left/right controller
+	leftController = &controllers.controllers[0];
+	rightController = &controllers.controllers[1];
+
+	// Let there be light!
+	leftController->color = { 0.f, 1.f, 1.f };
+	rightController->color = { 1.f, 0.f, 1.f };
+	moveAPI.update();
+}
 
 int main()
 {
@@ -27,48 +61,21 @@ int main()
 		exit(1);
 	}
 
-	// Create clock
-	Clock clock = Clock();
-
-	// Initialize the cameras
-	vr::VRCamera* cameras = vr::initializeEveryCam(60, 640, 480, 20, 0, true);
-
-	// Create UDP connection
-	Connection connection = Connection(49000);
-
-	// Create controller handlers
-	const char* leftSrl = "00:06:f7:c9:a1:fb";
-	const char* rightSrl = "00:13:8a:9c:31:42";
-	vr::VRControllerHandler controllers = vr::VRControllerHandler();
-	psmoveapi::PSMoveAPI moveAPI(&controllers);
-
-	// Allocate the space for the left/right controller in the controller vector
-	controllers.allocateControllerSpace(leftSrl);
-	controllers.allocateControllerSpace(rightSrl);
-
-	// Set pointers to the left/right controller
-	vr::VRController* leftController = &controllers.controllers[0];
-	vr::VRController* rightController = &controllers.controllers[1];
-
-	// Calibrate controller IMUs
-	vr::calibrateControllers(5000, &controllers, &moveAPI);
-
-	// Set colors
-	leftController->color = { 0.f, 1.f, 1.f };
-	rightController->color = { 1.f, 0.f, 1.f };
-	moveAPI.update();
+	// Initialize
+	init();
+	optical::init(&controllers, cameras);
 
 	// Main loop
 	for (;;) {
-		// Tick the clock
-		clock.tick();
-
-		// Read cameras and controllers
-		cameras[0].read();
+		// Tick the clock and controllers
+		ps_clock.tick();
 		moveAPI.update();
 
+		// Loop the optical task
+		optical::loop();
+
 		// Debug info
-		cv::putText(cameras[0].cvImg, std::to_string(1.f / clock.timestep), cv::Point(0.f, 16.f), cv::FONT_HERSHEY_PLAIN, 1, cv::Scalar(255.f, 255.f, 255.f));
+		cv::putText(cameras[0].cvImg, std::to_string(1.f / ps_clock.timestep), { 0, 16 }, cv::FONT_HERSHEY_PLAIN, 1, { 255.f, 255.f, 255.f });
 
 		// Send UDP signal to SteamVR
 		//std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args());

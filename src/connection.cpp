@@ -1,6 +1,8 @@
 #include "connection.h"
 
-psmovevr::Connection::Connection(unsigned int port) {
+psmovevr::Connection::Connection() {}
+
+void psmovevr::Connection::start(unsigned int port) {
 	// this shit is black magic
 	WSADATA wsaData;
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -9,7 +11,7 @@ psmovevr::Connection::Connection(unsigned int port) {
 		exit(1);
 		return;
 	}
-	
+
 	sock = INVALID_SOCKET;
 	if ((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
 	{
@@ -20,7 +22,7 @@ psmovevr::Connection::Connection(unsigned int port) {
 
 	// this too
 	ZeroMemory(&remoteAddr, sizeof(remoteAddr));
-	remoteAddr.sin_family = AF_INET;	
+	remoteAddr.sin_family = AF_INET;
 	remoteAddr.sin_port = htons(port);
 	remoteAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 }

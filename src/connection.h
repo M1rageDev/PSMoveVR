@@ -16,7 +16,9 @@ namespace psmovevr
 		SOCKET sock;
 		sockaddr_in remoteAddr;
 
-		Connection(unsigned int port);
+		Connection();
+
+		void start(unsigned int port);
 
 		void send(const char* buffer);
 

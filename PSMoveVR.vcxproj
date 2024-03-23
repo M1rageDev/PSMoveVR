@@ -149,6 +149,7 @@
     <ClCompile Include="src\connection.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\optical.cpp" />
+    <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vr_lib\vr_calibration.cpp" />
     <ClCompile Include="src\vr_lib\vr_cameras.cpp" />
     <ClCompile Include="src\vr_lib\vr_config.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="src\clock.h" />
     <ClInclude Include="src\connection.h" />
     <ClInclude Include="src\optical.h" />
+    <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vr_lib\vr_calibration.h" />
     <ClInclude Include="src\vr_lib\vr_cameras.h" />
     <ClInclude Include="src\vr_lib\vr_config.h" />
