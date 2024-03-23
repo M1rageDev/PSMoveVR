@@ -16,7 +16,6 @@ namespace vr {
 	};
 
 	struct VRController {
-		bool connected = false;
 		std::string serial;
 
 		RGB color = { 0.f, 0.f, 0.f };
