@@ -36,12 +36,16 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 	printf("Controller connected: %s\n", controller->serial);
 
 	// See if the controller is already allocated
+	int i = 0;
 	for (VRController vrc : controllers) {
 		// Compare the serial number
 		if (strcmp(controller->serial, vrc.serial.c_str())) {
+			connectedControllers[i] = true;
 			vrc.connect(controller);
 			return;
 		}
+
+		i++;
 	}
 
 	// We haven't found any allocated controller, so do it now
@@ -50,6 +54,7 @@ void vr::VRControllerHandler::connect(Controller* controller) {
 	vrc.connect(controller);
 
 	// Add controller to list
+	connectedControllers.push_back(true);
 	controllers.push_back(vrc);
 }
 
@@ -70,6 +75,7 @@ void vr::VRControllerHandler::disconnect(Controller* controller) {
 	for (int i = 0; i < controllers.size(); i++) {
 		if (strcmp(controller->serial, controllers[i].serial.c_str())) {
 			controllers.erase(controllers.begin() + i);
+			connectedControllers.erase(connectedControllers.begin() + i);
 			break;
 		}
 	}
@@ -83,6 +89,7 @@ void vr::VRControllerHandler::allocateControllerSpace(const char* serial) {
 	VRController controller = VRController();
 	controller.serial = serial;
 
+	connectedControllers.push_back(false);
 	controllers.push_back(controller);
 }
 

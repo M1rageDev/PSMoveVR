@@ -50,6 +50,7 @@ namespace vr {
 
 		glm::vec3 getAccel(uint8_t index);
 
+		std::vector<bool> connectedControllers;
 		std::vector<VRController> controllers;
 	};
 }

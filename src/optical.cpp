@@ -18,6 +18,8 @@ void psmovevr::optical::loop() {
 	for (int i = 0; i < controllers->controllers.size(); i++) {
 		vr::VRController vrc = controllers->controllers[i];
 
+		if (!controllers->connectedControllers[i]) continue;
+
 		auto [ret, ball] = vr::detectCircle(cameras[0].cvImg, { 95, 0, 92 }, { 169, 169, 255 });  // TODO: color calibration
 		cv::circle(cameras[0].cvImg, { (int)ball.x, (int)ball.y }, (int)ball.z, { 255, 255, 255 }, 1);
 	}
