@@ -1,7 +1,7 @@
 #include "vr_tracking.h"
 
-std::tuple<bool, glm::vec3> vr::detectCircle(cv::Mat frame, cv::Scalar low, cv::Scalar high) {
-	// TODO: improve performance, currently its shit af (performance went from 60 to 30-45fps with 2 controllers tracked)
+std::tuple<bool, glm::vec3> vr::detectCircle(vr::VRCamera camera, cv::Mat frame, cv::Scalar low, cv::Scalar high) {
+	// TODO: improve performance, doc-ok's implementation seems alright, both for detection and 3D estimation
 
 	// Mask out the color
 	cv::Mat hsvFrame;
@@ -9,6 +9,9 @@ std::tuple<bool, glm::vec3> vr::detectCircle(cv::Mat frame, cv::Scalar low, cv::
 
 	cv::Mat mask;
 	cv::inRange(hsvFrame, low, high, mask);
+	
+	// See if mask is all 0s
+	if (cv::countNonZero(mask) < 1) return { false, glm::vec3() };
 
 	// Find contours
 	std::vector<std::vector<cv::Point>> contours;
@@ -31,6 +34,11 @@ std::tuple<bool, glm::vec3> vr::detectCircle(cv::Mat frame, cv::Scalar low, cv::
 	cv::Point2f center;
 	float radius;
 	cv::minEnclosingCircle(maxContour, center, radius);
+
+	/*
+	std::vector<cv::Point> hull, undistorted;
+	cv::convexHull(maxContour, hull);
+	cv::undistortPoints(hull, undistorted, camera.matrix, camera.distortion);*/
 
 	return { true, glm::vec3(center.x, center.y, radius) };
 }
@@ -60,4 +68,8 @@ glm::vec3 vr::estimatePosition(glm::vec3 ball, float f_px, uint16_t imgW, uint16
 	float Y_cm = L_cm * Y_px / L_px;
 
 	return glm::vec3(X_cm, Y_cm, Z_cm);
+}
+
+glm::vec3 vr::estimatePosition(glm::vec3 circle1, glm::vec3 circle2, vr::VRCamera camera1, vr::VRCamera camera2) {
+	
 }

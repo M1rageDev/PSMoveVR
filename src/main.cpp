@@ -13,6 +13,7 @@
 #include "clock.h"
 #include "connection.h"
 #include "optical.h"
+#include "orientation.h"
 
 using namespace psmovevr;
 
@@ -46,6 +47,12 @@ void init() {
 	leftController = &controllers.controllers[0];
 	rightController = &controllers.controllers[1];
 
+	// Set controller optical colors
+	leftController->optical.lowerColor = { 29, 0, 75 };
+	leftController->optical.higherColor = { 106, 255, 255 };
+	rightController->optical.lowerColor = { 95, 0, 92 };
+	rightController->optical.higherColor = { 169, 169, 255 };
+
 	// Let there be light!
 	leftController->color = { 0.f, 1.f, 1.f };
 	rightController->color = { 1.f, 0.f, 1.f };
@@ -64,6 +71,7 @@ int main()
 	// Initialize
 	init();
 	optical::init(&controllers, cameras);
+	orientation::init(&controllers, cameras);
 
 	// Main loop
 	for (;;) {
@@ -72,10 +80,14 @@ int main()
 		moveAPI.update();
 
 		// Loop the optical task
+		// TODO: thread the optical task, making the orientation/UDP tasks run faster on the main thread
 		optical::loop();
 
+		// Loop the orientation task
+		orientation::loop();
+
 		// Debug info
-		cv::putText(cameras[0].cvImg, std::to_string(1.f / ps_clock.timestep), { 0, 16 }, cv::FONT_HERSHEY_PLAIN, 1, { 255.f, 255.f, 255.f });
+		cv::putText(cameras[0].cvImg, std::to_string(1.f / ps_clock.timestep) + "hz", {0, 16}, cv::FONT_HERSHEY_PLAIN, 1, {255.f, 255.f, 255.f});
 
 		// Send UDP signal to SteamVR
 		//std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args());

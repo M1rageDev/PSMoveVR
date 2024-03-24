@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "opencv2/opencv.hpp"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
@@ -13,6 +14,10 @@ namespace vr {
 	struct VRButtonStructure {
 		float trigger;
 		bool square, triangle, cross, circle, move, select, start, playstation;
+	};
+
+	struct VROpticalController {
+		cv::Scalar lowerColor, higherColor;
 	};
 
 	struct VRController {
@@ -27,6 +32,8 @@ namespace vr {
 		glm::vec3 gyro = { 0.f, 0.f, 0.f };
 		glm::vec3 gyroOffsets = { 0.f, 0.f, 0.f };
 		vr::VRMadgwick orientation = vr::VRMadgwick();
+
+		vr::VROpticalController optical;
 
 		float timestep = 0.f;
 		float lastTime = 0.f;

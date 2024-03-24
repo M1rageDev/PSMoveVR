@@ -54,6 +54,7 @@ bool vr::VRCamera::tryReadCalibration() {
 	matrix = vr::readNode("matrix");
 	distortion = vr::readNode("distortion");
 	vr::endRead();
+	f_px = matrix.at<double>(0);
 
 	return true;
 }
