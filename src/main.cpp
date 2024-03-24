@@ -47,6 +47,7 @@ void init() {
 	rightController = &controllers.controllers[1];
 
 	// Set controller optical colors
+	// TODO: color calibration stored in controller CFG
 	leftController->optical.lowerColor = { 29, 0, 75 };
 	leftController->optical.higherColor = { 106, 255, 255 };
 	rightController->optical.lowerColor = { 95, 0, 92 };
@@ -58,7 +59,7 @@ void init() {
 	moveAPI.update();
 }
 
-int main()
+int main(int argc, char** argv)
 {
 	// Error handling
 	if (!vr::checkCamerasConnected()) {
@@ -71,32 +72,34 @@ int main()
 	init();
 	optical::init(&controllers, cameras);
 
+	// Calibrate if needed
+	optical::calibrate();
+	vr::calibrateControllers(5000, &controllers, &moveAPI);
+
+	// Start the optical task
+	optical::start();
+
 	// Main loop
 	for (;;) {
 		// Tick the clock and controllers
 		ps_clock.tick();
 		moveAPI.update();
 
-		// Loop the optical task
-		// TODO: thread the optical task, making the orientation/UDP tasks run faster on the main thread
-		optical::loop();
-
-		// Debug info
-		cv::putText(cameras[0].cvImg, std::to_string(1.f / ps_clock.timestep) + "hz", {0, 16}, cv::FONT_HERSHEY_PLAIN, 1, {255.f, 255.f, 255.f});
+		// Debug the hz
+		optical::debugInfo = std::to_string(1.f / ps_clock.timestep) + " hz";
 
 		// Send UDP signal to SteamVR
 		//std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args());
 		//const char* charBuffer = stringBuffer.c_str();
 		//connection.send("Mm bobbies");
 
-		// Show picture and exit program if ESC pressed
-		cv::imshow("Camera", cameras[0].cvImg);
-		int key = cv::waitKey(1);
-		if (key == 27) break;
+		// Exit
+		if (optical::running == false) break;
 	}
 
 	// Stop the service
 	connection.stop();
+	optical::stop();
 	cv::destroyAllWindows();
 	vr::stopEveryCam(cameras);
 	return 0;

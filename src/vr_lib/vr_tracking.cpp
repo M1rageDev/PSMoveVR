@@ -71,5 +71,5 @@ glm::vec3 vr::estimatePosition(glm::vec3 ball, float f_px, uint16_t imgW, uint16
 }
 
 glm::vec3 vr::estimatePosition(glm::vec3 circle1, glm::vec3 circle2, vr::VRCamera camera1, vr::VRCamera camera2) {
-	
+	return glm::vec3();
 }
