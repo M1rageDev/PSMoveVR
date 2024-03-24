@@ -13,7 +13,6 @@
 #include "clock.h"
 #include "connection.h"
 #include "optical.h"
-#include "orientation.h"
 
 using namespace psmovevr;
 
@@ -71,7 +70,6 @@ int main()
 	// Initialize
 	init();
 	optical::init(&controllers, cameras);
-	orientation::init(&controllers, cameras);
 
 	// Main loop
 	for (;;) {
@@ -82,9 +80,6 @@ int main()
 		// Loop the optical task
 		// TODO: thread the optical task, making the orientation/UDP tasks run faster on the main thread
 		optical::loop();
-
-		// Loop the orientation task
-		orientation::loop();
 
 		// Debug info
 		cv::putText(cameras[0].cvImg, std::to_string(1.f / ps_clock.timestep) + "hz", {0, 16}, cv::FONT_HERSHEY_PLAIN, 1, {255.f, 255.f, 255.f});
