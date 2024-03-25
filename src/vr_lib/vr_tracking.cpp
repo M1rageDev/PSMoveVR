@@ -1,14 +1,12 @@
 #include "vr_tracking.h"
 
-std::tuple<bool, glm::vec3> vr::detectCircle(vr::VRCamera camera, cv::Mat frame, cv::Scalar low, cv::Scalar high) {
+std::tuple<bool, glm::vec3> vr::detectCircle(vr::VRCamera camera, cv::Mat frame, cv::Mat buffer, cv::Mat mask, cv::Scalar low, cv::Scalar high) {
 	// TODO: improve performance, doc-ok's implementation seems alright, both for detection and 3D estimation
 
 	// Mask out the color
-	cv::Mat hsvFrame;
-	cv::cvtColor(frame, hsvFrame, cv::COLOR_BGR2HSV);
+	cv::cvtColor(frame, buffer, cv::COLOR_BGR2HSV);
 
-	cv::Mat mask;
-	cv::inRange(hsvFrame, low, high, mask);
+	cv::inRange(buffer, low, high, mask);
 	
 	// See if mask is all 0s
 	if (cv::countNonZero(mask) < 1) return { false, glm::vec3() };
@@ -70,6 +68,15 @@ glm::vec3 vr::estimatePosition(glm::vec3 ball, float f_px, uint16_t imgW, uint16
 	return glm::vec3(X_cm, Y_cm, Z_cm);
 }
 
-glm::vec3 vr::estimatePosition(glm::vec3 circle1, glm::vec3 circle2, vr::VRCamera camera1, vr::VRCamera camera2) {
-	return glm::vec3();
+glm::vec4 vr::estimatePositionStereo(glm::vec2 point1, glm::vec2 point2, cv::Mat camera1, cv::Mat camera2) {
+	std::vector<cv::Point2d> point1cv;
+	std::vector<cv::Point2d> point2cv;
+
+	point1cv.push_back({ point1.x, point1.y });
+	point2cv.push_back({ point2.x, point2.y });
+
+	cv::Mat pointWorld(4, 1, CV_64F);
+	cv::triangulatePoints(camera1, camera2, point1cv, point2cv, pointWorld);
+
+	return glm::vec4(pointWorld.at<double>(0), pointWorld.at<double>(1), pointWorld.at<double>(2), pointWorld.at<double>(3));
 }

@@ -19,7 +19,8 @@ glm::vec3 vr::calibrateGyroscope(unsigned int sampleCount, vr::VRController* con
 }
 
 void vr::calibrateControllers(unsigned int sampleCount, vr::VRControllerHandler* controllers, psmoveapi::PSMoveAPI* api) {
-	for (auto vrc : controllers->controllers) vrc.gyroOffsets = vr::calibrateGyroscope(sampleCount, &vrc, api);
+	controllers->leftController.gyroOffsets = vr::calibrateGyroscope(sampleCount, &controllers->leftController, api);
+	controllers->rightController.gyroOffsets = vr::calibrateGyroscope(sampleCount, &controllers ->rightController, api);
 }
 
 std::vector<cv::Point2f> vr::captureSamples(cv::Mat frame) {

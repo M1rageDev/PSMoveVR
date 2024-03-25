@@ -14,8 +14,8 @@ namespace psmovevr::optical
 	inline vr::VRControllerHandler* controllers;
 	inline vr::VRCamera* cameras;
 
-	inline std::string debugInfo = "";
-
+	inline cv::Mat buffer;
+	inline cv::Mat mask;
 	inline cv::Mat frame;
 	inline glm::vec3 camera_cm;
 	inline glm::vec4 world_cm;
@@ -30,4 +30,20 @@ namespace psmovevr::optical
 	void stop();
 
 	// OTHER FUNCTIONS
+	inline glm::vec4 axisAngle(glm::quat q) {
+		if (q.w > 1.f) q = glm::normalize(q);
+
+		float x, y, z;
+
+		float angle = 2.f * glm::acos(q.w);
+		float s = glm::sqrt(1.f - q.w * q.w);
+		if (s < 0.001) {
+			x = q.x; y = q.y; z = q.z;
+		}
+		else {
+			x = q.x / s; y = q.y / s; z = q.z / s;
+		}
+
+		return glm::vec4(x, y, z, angle);
+	}
 }

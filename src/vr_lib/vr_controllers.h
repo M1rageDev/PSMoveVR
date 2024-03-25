@@ -6,6 +6,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
+#include "glm/gtx/string_cast.hpp"
 #include "psmoveapi/psmoveapi.h"
 
 #include "vr_filter.h"
@@ -20,8 +21,10 @@ namespace vr {
 		cv::Scalar lowerColor, higherColor;
 	};
 
-	struct VRController {
+	class VRController {
+	public:
 		std::string serial;
+		bool connected;
 
 		RGB color = { 0.f, 0.f, 0.f };
 		float rumble = 0.f;
@@ -43,21 +46,19 @@ namespace vr {
 	};
 
 	struct VRControllerHandler : public psmoveapi::Handler {
-		VRControllerHandler();
+		VRControllerHandler(std::string leftSerial, std::string rightSerial);
 
 		virtual void connect(Controller* controller);
-
 		virtual void update(Controller* controller);
-
 		virtual void disconnect(Controller* controller);
 
-		void allocateControllerSpace(const char* serial);
+		VRController* getController(uint8_t index);
 
+		bool isConnected(uint8_t index);
 		glm::vec3 getGyro(uint8_t index);
-
 		glm::vec3 getAccel(uint8_t index);
 
-		std::vector<bool> connectedControllers;
-		std::vector<VRController> controllers;
+		VRController leftController;
+		VRController rightController;
 	};
 }

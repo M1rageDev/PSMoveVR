@@ -1,7 +1,7 @@
 #include "vr_controllers.h"
 
 void vr::VRController::connect(Controller* controller) {
-
+	connected = true;
 }
 
 void vr::VRController::update(Controller* controller) {
@@ -27,76 +27,69 @@ void vr::VRController::update(Controller* controller) {
 	buttons.trigger = controller->trigger;
 }
 
-vr::VRControllerHandler::VRControllerHandler() {
+vr::VRControllerHandler::VRControllerHandler(std::string leftSerial, std::string rightSerial) {
+	leftController = vr::VRController();
+	rightController = vr::VRController();
 
+	leftController.serial = leftSerial;
+	rightController.serial = rightSerial;
 }
 
 void vr::VRControllerHandler::connect(Controller* controller) {
 	// Info
 	printf("Controller connected: %s\n", controller->serial);
 
-	// See if the controller is already allocated
-	int i = 0;
-	for (VRController vrc : controllers) {
-		// Compare the serial number
-		if (strcmp(controller->serial, vrc.serial.c_str())) {
-			connectedControllers[i] = true;
-			vrc.connect(controller);
-			return;
-		}
-
-		i++;
+	// Compare the serial number
+	if (strcmp(controller->serial, leftController.serial.c_str())) {
+		leftController.connect(controller);
+		return;
 	}
-
-	// We haven't found any allocated controller, so do it now
-	VRController vrc = VRController();
-	vrc.serial = controller->serial;
-	vrc.connect(controller);
-
-	// Add controller to list
-	connectedControllers.push_back(true);
-	controllers.push_back(vrc);
+	else {
+		rightController.connect(controller);
+	}
 }
 
 void vr::VRControllerHandler::update(Controller* controller) {
-	// Iterate over every controller
-	for (VRController vrc : controllers) {
-		// Compare the serial number
-		if (strcmp(controller->serial, vrc.serial.c_str())) {
-			// Update the correct controller and break the loop
-			vrc.update(controller);
-			break;
-		}
+	// Compare the serial number
+	if (strcmp(controller->serial, leftController.serial.c_str())) {
+		leftController.update(controller);
+	}
+	else {
+		rightController.update(controller);
 	}
 }
 
 void vr::VRControllerHandler::disconnect(Controller* controller) {
-	// Remove from list
-	for (int i = 0; i < controllers.size(); i++) {
-		if (strcmp(controller->serial, controllers[i].serial.c_str())) {
-			controllers.erase(controllers.begin() + i);
-			connectedControllers.erase(connectedControllers.begin() + i);
-			break;
-		}
+	// Remove
+	if (strcmp(controller->serial, leftController.serial.c_str())) {
+		// Left
+		leftController.connected = false;
+	}
+	else {
+		// Right
+		rightController.connected = false;
 	}
 
 	// Info
 	printf("Controller disconnected: %s\n", controller->serial);
 }
 
-void vr::VRControllerHandler::allocateControllerSpace(const char* serial) {
-	// Allocate the space in the controller vector for a controller, allowing data to be passed before the controller is loaded by PSMoveAPI
-	VRController controller = VRController();
-	controller.serial = serial;
+vr::VRController* vr::VRControllerHandler::getController(uint8_t index) {
+	if (index == 0) return &leftController;
+	else return &rightController;
+}
 
-	connectedControllers.push_back(false);
-	controllers.push_back(controller);
+bool vr::VRControllerHandler::isConnected(uint8_t index) {
+	if (index == 0) return leftController.connected;
+	else return rightController.connected;
 }
 
 glm::vec3 vr::VRControllerHandler::getGyro(uint8_t index) {
-	return controllers[index].gyro;
+	if (index == 0) return leftController.gyro;
+	else return rightController.gyro;
 }
 
 glm::vec3 vr::VRControllerHandler::getAccel(uint8_t index) {
-	return controllers[index].gyro;
+	if (index == 0) return leftController.accel;
+	else return rightController.accel;
 }

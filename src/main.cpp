@@ -23,8 +23,9 @@ const std::string DATA_BUFFER = "{}{}{}{}{}{}{}";
 Clock ps_clock;
 Connection connection;
 vr::VRCamera* cameras;
-vr::VRControllerHandler controllers = vr::VRControllerHandler();
+vr::VRControllerHandler controllers = vr::VRControllerHandler("00:06:f7:c9:a1:fb", "00:13:8a:9c:31:42");
 psmoveapi::PSMoveAPI moveAPI(&controllers);
+
 vr::VRController* leftController;
 vr::VRController* rightController;
 
@@ -38,13 +39,9 @@ void init() {
 	const char* leftSrl = "00:06:f7:c9:a1:fb";
 	const char* rightSrl = "00:13:8a:9c:31:42";
 
-	// Allocate the space for the left/right controller in the controller vector
-	controllers.allocateControllerSpace(leftSrl);
-	controllers.allocateControllerSpace(rightSrl);
-
 	// Set pointers to the left/right controller
-	leftController = &controllers.controllers[0];
-	rightController = &controllers.controllers[1];
+	leftController = &controllers.leftController;
+	rightController = &controllers.rightController;
 
 	// Set controller optical colors
 	// TODO: color calibration stored in controller CFG
@@ -76,7 +73,7 @@ int main(int argc, char** argv)
 	optical::calibrate();
 	vr::calibrateControllers(5000, &controllers, &moveAPI);
 
-	// Start the optical task
+	// Start the optical task, making it tick itself
 	optical::start();
 
 	// Main loop
@@ -84,9 +81,6 @@ int main(int argc, char** argv)
 		// Tick the clock and controllers
 		ps_clock.tick();
 		moveAPI.update();
-
-		// Debug the hz
-		optical::debugInfo = std::to_string(1.f / ps_clock.timestep) + " hz";
 
 		// Send UDP signal to SteamVR
 		//std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args());
