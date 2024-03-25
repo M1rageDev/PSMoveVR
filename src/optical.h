@@ -9,32 +9,32 @@
 
 namespace psmovevr::optical
 {
+	// Threaded task
 	inline std::thread task;
 	inline bool running = false;
 
+	// Global variables
 	inline vr::VRControllerHandler* controllers;
 	inline vr::VRCamera* cameras;
 
+	// Framebuffers
 	inline cv::Mat buffer;
 	inline cv::Mat mask;
 	inline cv::Mat frame;
 
+	// World positions
 	inline glm::vec4 last_cm_l;
 	inline glm::vec4 last_cm_r;
-
 	inline glm::vec4 world_cm_l;
 	inline glm::vec4 world_cm_r;
 
-	// PROGRAM MODULE FUNCTIONS
 	void init(vr::VRControllerHandler* controllers_, vr::VRCamera* cameras_);
 	void calibrate();
 	void start();
-
 	void loop();
-
 	void stop();
 
-	// OTHER FUNCTIONS
+	// Other functions
 	inline glm::vec4 axisAngle(glm::quat q) {
 		if (q.w > 1.f) q = glm::normalize(q);
 

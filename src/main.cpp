@@ -16,10 +16,10 @@
 
 using namespace psmovevr;
 
-// CONSTANTS
+// Constants
 const std::string DATA_BUFFER = "{}{}{}{}{}{}{}";
 
-// INSTANCES
+// Instances
 Clock ps_clock;
 Connection connection;
 vr::VRCamera* cameras;
@@ -28,6 +28,9 @@ psmoveapi::PSMoveAPI moveAPI(&controllers);
 
 vr::VRController* leftController;
 vr::VRController* rightController;
+
+// OFFSETS
+glm::vec4 headOffset = glm::vec4();
 
 void init() {
 	ps_clock = Clock();
@@ -57,24 +60,30 @@ void init() {
 }
 
 const char* formatSteamVr() {
-	float rxcL = optical::world_cm_l.x;
-	float rycL = optical::world_cm_l.y;
-	float rzcL = optical::world_cm_l.z;
+	// Apply corrections/offsets
+	glm::vec4 corrected_l = (optical::world_cm_l - headOffset) / 100.f;
+	glm::vec4 corrected_r = (optical::world_cm_r = headOffset) / 100.f;
+
+	// Stuff to make formatting easier to write/read
+	float rxcL = corrected_l.x;
+	float rycL = corrected_l.y;
+	float rzcL = corrected_l.z;
 	float qwL = leftController->orientation.q.w;
 	float qxL = leftController->orientation.q.x;
 	float qyL = leftController->orientation.q.z;
 	float qzL = -leftController->orientation.q.y;
 	float trigL = leftController->buttons.trigger;
 
-	float rxcR = optical::world_cm_r.x;
-	float rycR = optical::world_cm_r.y;
-	float rzcR = optical::world_cm_r.z;
+	float rxcR = corrected_r.x;
+	float rycR = corrected_r.y;
+	float rzcR = corrected_r.z;
 	float qwR = rightController->orientation.q.w;
 	float qxR = rightController->orientation.q.x;
 	float qyR = rightController->orientation.q.z;
 	float qzR = -rightController->orientation.q.y;
 	float trigR = rightController->buttons.trigger;
 
+	// Format base string
 	std::string stringBuffer = std::vformat(DATA_BUFFER_VR, std::make_format_args(rxcL, rycL, rzcL, qwL, qxL, qyL, qzL, rxcR, rycR, rzcR, qwR, qxR, qyR, qzR, trigL, trigR));
 	const char* charBuffer = stringBuffer.c_str();
 
@@ -98,7 +107,7 @@ int main(int argc, char** argv)
 	optical::calibrate();
 	vr::calibrateControllers(5000, &controllers, &moveAPI);
 
-	// Start the optical task, making it tick itself
+	// Start the optical task, making it update itself
 	optical::start();
 
 	// Main loop
@@ -106,6 +115,9 @@ int main(int argc, char** argv)
 		// Tick the clock and controllers
 		ps_clock.tick();
 		moveAPI.update();
+
+		// Read controller input and do actions like offsets
+		if (rightController->buttons.triangle) headOffset = optical::world_cm_r;
 
 		// Format and send UDP signal to SteamVR
 		const char* buffer = formatSteamVr();
