@@ -34,8 +34,22 @@ void psmovevr::optical::loop() {
 
 			// Track in 3D space and transform the coordinate space
 			// TODO: implement camera transform calibration
-			camera_cm = vr::estimatePosition(ball, cameras[0].f_px, frame.cols, frame.rows);
-			world_cm = glm::vec4(camera_cm, 1.f) * cameras[0].transformMatrix;
+			glm::vec3 camera_cm = vr::estimatePosition(ball, cameras[0].f_px, frame.cols, frame.rows);
+			glm::vec4 world_cm = glm::vec4(camera_cm, 1.f) * cameras[0].transformMatrix;
+
+			// Apply filter
+			glm::vec4 last_vec = (i == 0) ? last_cm_l : last_cm_r;
+			world_cm = vr::lowpass(last_vec, world_cm, -1.5f, -1.5f);
+
+			// Assign
+			if (i == 0) {
+				world_cm_l = world_cm;
+				last_cm_l = world_cm_l;
+			}
+			else {
+				world_cm_r = world_cm;
+				last_cm_r = world_cm_r;
+			}
 
 			// Frame axes
 			glm::vec4 rot = optical::axisAngle(glm::quat(vrc.orientation.q.x, vrc.orientation.q.z, vrc.orientation.q.y, vrc.orientation.q.w));

@@ -56,6 +56,31 @@ void init() {
 	moveAPI.update();
 }
 
+const char* formatSteamVr() {
+	float rxcL = optical::world_cm_l.x;
+	float rycL = optical::world_cm_l.y;
+	float rzcL = optical::world_cm_l.z;
+	float qwL = leftController->orientation.q.w;
+	float qxL = leftController->orientation.q.x;
+	float qyL = leftController->orientation.q.z;
+	float qzL = -leftController->orientation.q.y;
+	float trigL = leftController->buttons.trigger;
+
+	float rxcR = optical::world_cm_r.x;
+	float rycR = optical::world_cm_r.y;
+	float rzcR = optical::world_cm_r.z;
+	float qwR = rightController->orientation.q.w;
+	float qxR = rightController->orientation.q.x;
+	float qyR = rightController->orientation.q.z;
+	float qzR = -rightController->orientation.q.y;
+	float trigR = rightController->buttons.trigger;
+
+	std::string stringBuffer = std::vformat(DATA_BUFFER_VR, std::make_format_args(rxcL, rycL, rzcL, qwL, qxL, qyL, qzL, rxcR, rycR, rzcR, qwR, qxR, qyR, qzR, trigL, trigR));
+	const char* charBuffer = stringBuffer.c_str();
+
+	return charBuffer;
+}
+
 int main(int argc, char** argv)
 {
 	// Error handling
@@ -82,10 +107,9 @@ int main(int argc, char** argv)
 		ps_clock.tick();
 		moveAPI.update();
 
-		// Send UDP signal to SteamVR
-		//std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args());
-		//const char* charBuffer = stringBuffer.c_str();
-		//connection.send("Mm bobbies");
+		// Format and send UDP signal to SteamVR
+		const char* buffer = formatSteamVr();
+		connection.send(buffer);
 
 		// Exit
 		if (optical::running == false) break;

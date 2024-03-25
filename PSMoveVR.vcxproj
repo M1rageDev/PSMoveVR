@@ -155,6 +155,7 @@
     <ClCompile Include="src\vr_lib\vr_config.cpp" />
     <ClCompile Include="src\vr_lib\vr_controllers.cpp" />
     <ClCompile Include="src\vr_lib\vr_filter.cpp" />
+    <ClCompile Include="src\vr_lib\vr_math.cpp" />
     <ClCompile Include="src\vr_lib\vr_tracking.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="src\vr_lib\vr_config.h" />
     <ClInclude Include="src\vr_lib\vr_controllers.h" />
     <ClInclude Include="src\vr_lib\vr_filter.h" />
+    <ClInclude Include="src\vr_lib\vr_math.h" />
     <ClInclude Include="src\vr_lib\vr_tracking.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

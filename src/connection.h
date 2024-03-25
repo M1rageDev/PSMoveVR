@@ -9,7 +9,7 @@
 
 namespace psmovevr
 {
-	const std::string DATA_BUFFER = "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|0|0|0|0|0|0|0|0|{}|{}|0|0|0|0|0|0|0|0";
+	const std::string DATA_BUFFER_VR = "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|0|0|0|0|0|0|0|0|{}|{}|0|0|0|0|0|0|0|0";
 
 	class Connection {
 	public:

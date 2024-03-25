@@ -5,6 +5,7 @@
 #include "vr_cameras.h"
 #include "vr_controllers.h"
 #include "vr_tracking.h"
+#include "vr_math.h"
 
 namespace psmovevr::optical
 {
@@ -17,8 +18,12 @@ namespace psmovevr::optical
 	inline cv::Mat buffer;
 	inline cv::Mat mask;
 	inline cv::Mat frame;
-	inline glm::vec3 camera_cm;
-	inline glm::vec4 world_cm;
+
+	inline glm::vec4 last_cm_l;
+	inline glm::vec4 last_cm_r;
+
+	inline glm::vec4 world_cm_l;
+	inline glm::vec4 world_cm_r;
 
 	// PROGRAM MODULE FUNCTIONS
 	void init(vr::VRControllerHandler* controllers_, vr::VRCamera* cameras_);
