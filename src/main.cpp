@@ -133,7 +133,8 @@ int main(int argc, char** argv)
 		if (optical::running == false) break;
 	}
 
-	connection.send("D");
+	// Send disconnect signal
+	connection.send("Disconnect");
 
 	// Stop the service
 	//connection.stop();
