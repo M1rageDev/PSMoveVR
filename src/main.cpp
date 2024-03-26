@@ -1,4 +1,5 @@
 // Standard
+#include "connection.h"
 #include <iostream>
 
 // VR lib
@@ -11,13 +12,12 @@
 
 // Program modules
 #include "clock.h"
-#include "connection.h"
 #include "optical.h"
 
 using namespace psmovevr;
 
 // Constants
-const std::string DATA_BUFFER = "{}{}{}{}{}{}{}";
+const std::string DATA_BUFFER = "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|0|0|0|0|0|0|0|0|{}|{}|0|0|0|0|0|0|0|0";
 
 // Instances
 Clock ps_clock;
@@ -29,14 +29,14 @@ psmoveapi::PSMoveAPI moveAPI(&controllers);
 vr::VRController* leftController;
 vr::VRController* rightController;
 
-// OFFSETS
+// Corrections/offsets
 glm::vec4 headOffset = glm::vec4();
 
 void init() {
 	ps_clock = Clock();
 	cameras = vr::initializeEveryCam(60, 640, 480, 20, 0, true);
 	connection = Connection();
-	connection.start(49000);
+	connection.start(49152);
 
 	// Create controller handlers
 	const char* leftSrl = "00:06:f7:c9:a1:fb";
@@ -59,35 +59,36 @@ void init() {
 	moveAPI.update();
 }
 
-const char* formatSteamVr() {
+std::string formatSteamVr() {
 	// Apply corrections/offsets
 	glm::vec4 corrected_l = (optical::world_cm_l - headOffset) / 100.f;
-	glm::vec4 corrected_r = (optical::world_cm_r = headOffset) / 100.f;
+	glm::vec4 corrected_r = (optical::world_cm_r - headOffset) / 100.f;
+	glm::quat correctedRot_l = leftController->orientation.q;
+	glm::quat correctedRot_r = rightController->orientation.q;
 
 	// Stuff to make formatting easier to write/read
 	float rxcL = corrected_l.x;
 	float rycL = corrected_l.y;
 	float rzcL = corrected_l.z;
-	float qwL = leftController->orientation.q.w;
-	float qxL = leftController->orientation.q.x;
-	float qyL = leftController->orientation.q.z;
-	float qzL = -leftController->orientation.q.y;
+	float qwL = correctedRot_l.w;
+	float qxL = correctedRot_l.x;
+	float qyL = correctedRot_l.z;
+	float qzL = -correctedRot_l.y;
 	float trigL = leftController->buttons.trigger;
 
 	float rxcR = corrected_r.x;
 	float rycR = corrected_r.y;
 	float rzcR = corrected_r.z;
-	float qwR = rightController->orientation.q.w;
-	float qxR = rightController->orientation.q.x;
-	float qyR = rightController->orientation.q.z;
-	float qzR = -rightController->orientation.q.y;
+	float qwR = correctedRot_r.w;
+	float qxR = correctedRot_r.x;
+	float qyR = correctedRot_r.z;
+	float qzR = -correctedRot_r.y;
 	float trigR = rightController->buttons.trigger;
 
 	// Format base string
-	std::string stringBuffer = std::vformat(DATA_BUFFER_VR, std::make_format_args(rxcL, rycL, rzcL, qwL, qxL, qyL, qzL, rxcR, rycR, rzcR, qwR, qxR, qyR, qzR, trigL, trigR));
-	const char* charBuffer = stringBuffer.c_str();
+	std::string stringBuffer = std::vformat(DATA_BUFFER, std::make_format_args(rxcL, rycL, rzcL, qwL, qxL, qyL, qzL, rxcR, rycR, rzcR, qwR, qxR, qyR, qzR, trigL, trigR));
 
-	return charBuffer;
+	return stringBuffer;
 }
 
 int main(int argc, char** argv)
@@ -118,17 +119,24 @@ int main(int argc, char** argv)
 
 		// Read controller input and do actions like offsets
 		if (rightController->buttons.triangle) headOffset = optical::world_cm_r;
+		if (leftController->buttons.square) leftController->orientation.q = glm::quat(vr::Q90);
+		if (rightController->buttons.square) rightController->orientation.q = glm::quat(vr::Q90);
 
 		// Format and send UDP signal to SteamVR
-		const char* buffer = formatSteamVr();
-		connection.send(buffer);
+		std::string buffer = formatSteamVr();
+		const char* charBuffer = buffer.c_str();
+		connection.send(charBuffer);
+
+		Sleep(10);
 
 		// Exit
 		if (optical::running == false) break;
 	}
 
+	connection.send("D");
+
 	// Stop the service
-	connection.stop();
+	//connection.stop();
 	optical::stop();
 	cv::destroyAllWindows();
 	vr::stopEveryCam(cameras);

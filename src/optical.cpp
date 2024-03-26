@@ -39,7 +39,7 @@ void psmovevr::optical::loop() {
 
 			// Apply filter
 			glm::vec4 last_vec = (i == 0) ? last_cm_l : last_cm_r;
-			world_cm = vr::lowpass(last_vec, world_cm, -1.5f, -1.5f);
+			world_cm = vr::lowpass(last_vec, world_cm, 0.f, 0.f);
 
 			// Assign
 			if (i == 0) {

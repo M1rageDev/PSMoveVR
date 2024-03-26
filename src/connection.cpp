@@ -13,22 +13,28 @@ void psmovevr::Connection::start(unsigned int port) {
 	}
 
 	sock = INVALID_SOCKET;
-	if ((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
+	if ((sock = ::socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 	{
 		std::cerr << "Failed the socket with error: " << WSAGetLastError() << '\n';
 		exit(1);
 		return;
 	}
 
+	u_long mode = 1;
+	ioctlsocket(sock, FIONBIO, &mode);
+
 	// this too
 	ZeroMemory(&remoteAddr, sizeof(remoteAddr));
 	remoteAddr.sin_family = AF_INET;
 	remoteAddr.sin_port = htons(port);
-	remoteAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	inet_pton(AF_INET, "127.0.0.1", &remoteAddr.sin_addr);
+
+	connect(sock, (struct sockaddr*)&remoteAddr, sizeof(remoteAddr));
+	std::cout << WSAGetLastError() << std::endl;
 }
 
 void psmovevr::Connection::send(const char* buffer) {
-	int sent = sendto(sock, buffer, strlen(buffer), 0, (sockaddr*)&remoteAddr, sizeof(remoteAddr));
+	int sent = ::send(sock, buffer, strlen(buffer), 0); 
 	if (sent == SOCKET_ERROR)
 	{
 		std::cerr << "Failed the sendto with error: " << WSAGetLastError() << '\n';
@@ -38,6 +44,6 @@ void psmovevr::Connection::send(const char* buffer) {
 }
 
 void psmovevr::Connection::stop() {
-	closesocket(sock);
+	::closesocket(sock);
 	WSACleanup();
 }

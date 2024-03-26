@@ -1,19 +1,26 @@
 #pragma once
+#ifndef PSVR_CONNECTION
+#define PSVR_CONNECTION
 
-#include <Windows.h>
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <iphlpapi.h>
 #include <iostream>
 
-#pragma comment(lib, "Ws2_32.lib")
-#pragma comment (lib, "Mswsock.lib")
-#pragma comment (lib, "AdvApi32.lib")
+#pragma comment(lib,"ws2_32.lib")
 
 namespace psmovevr
 {
-	const std::string DATA_BUFFER_VR = "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|0|0|0|0|0|0|0|0|{}|{}|0|0|0|0|0|0|0|0";
+	inline const char* DATA_BUFFER_VR = "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|0|0|0|0|0|0|0|0|{}|{}|0|0|0|0|0|0|0|0";
 
 	class Connection {
 	public:
-		SOCKET sock;
+		SOCKET sock = INVALID_SOCKET;
 		sockaddr_in remoteAddr;
 
 		Connection();
@@ -25,3 +32,4 @@ namespace psmovevr
 		void stop();
 	};
 }
+#endif

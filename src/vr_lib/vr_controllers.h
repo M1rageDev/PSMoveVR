@@ -12,6 +12,8 @@
 #include "vr_filter.h"
 
 namespace vr {
+	inline glm::quat Q90 = glm::quat(0.7071069f, 0.7071067f, 0.f, 0.f);
+
 	struct VRButtonStructure {
 		float trigger;
 		bool square, triangle, cross, circle, move, select, start, playstation;

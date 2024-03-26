@@ -12,7 +12,7 @@ namespace vr {
 	public:
 		PS3EYECam::PS3EYERef eye;
 
-		glm::mat4 transformMatrix;
+		glm::mat4 transformMatrix = glm::mat4(1.f);
 		float f_px = 0.f;
 		cv::Mat matrix, distortion;
 		cv::Mat cvImg;
